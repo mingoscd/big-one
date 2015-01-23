@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Shouter</title>
+	<style>
+		.shout-author{display: inline; font-size: 14px; font-weight: bold; margin: 5px 10px; }
+		section{ width: 50%; margin-left: auto; margin-right: auto; margin:20px;}
+		article{ border: 1px solid black; background: #EEE; width: 100%; margin:20px;}
+		article p{padding: 0 20px; font-size: 20px;}
+		form{ display: inline }
+		.right{text-align: right; margin: 10px;}
+	</style>
+</head>
+<body>
+	<section>
+		<form action="/send_shout" method="POST">
+			<input type="textarea" name="message" placeholder="Shout what you want">
+			<input type="text" name="password" placeholder="Password">
+			<input type="submit">
+		</form>		
+	</section>
+	<section>
+		<% @shouts.each do |shout| %>
+			<article>
+				<span class="shout-author" > <%= shout.user.name %> </span>
+				<span class="shout-author"> <%= shout.user.handle %> </span>
+				<p><%= shout.message %></p>
+				<div class="right">
+					<span><%= shout.likes %></span> 
+					<form action="/send_like" method="POST">
+						<input type="hidden" name="id" value="<%= shout.id %>">
+						<input type="submit" value="like button">
+					</form>
+				</div>
+			</article>
+		<% end %>
+	</section>
+
+</body>
+</html>
